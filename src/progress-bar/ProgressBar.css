@@ -1,0 +1,28 @@
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6pxvh;
+    border-radius: 8px;
+}
+
+.progress-bar:hover {
+    
+    transition: .1s;
+    transition-timing-function: ease-in-out;
+    cursor: pointer;
+    height: 8px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.control-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+
+.control:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

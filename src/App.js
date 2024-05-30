@@ -1,15 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
 import ProgressBar from './progress-bar/ProgressBar';
 import { Container } from '@mui/material';
 
+
 function App() {
+  
   return (
-    <div className="">
-      <Container>
-        <ProgressBar/>
+    <div className="App">
+      <Container >
+
+        <ProgressBar />
+
       </Container>
-      
+
     </div>
   );
 }

@@ -1,0 +1,7 @@
+/* Align Items to the bottom of the screen */
+.App {
+  display: flex;
+  padding: 4%;
+  height: 100vh;
+  align-items: flex-end;
+}
