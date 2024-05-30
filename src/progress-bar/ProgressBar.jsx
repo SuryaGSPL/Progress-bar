@@ -11,7 +11,7 @@ import { PlayArrowRounded, PauseRounded, FastRewindRounded, FastForwardRounded }
 function ProgressBar() {
 
     const [progress, setProgress] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
     const progressBarRef = useRef(null);
     // Fast forward and rewind duration
     const difference = 10;
