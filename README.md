@@ -11,3 +11,6 @@ The progress bar is also interactive for the mouse event
 ## /src/progress-bar --> contains progress bar component
 
 - "progress" state hook is used to set the progress
+
+
+## npm install --save gh-pages --> used to host on github pages
