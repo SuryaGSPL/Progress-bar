@@ -24,7 +24,7 @@ const getDesignTokens = (mode) => ({
 });
 
 const ThemedApp = () => {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
 
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 

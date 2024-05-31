@@ -1,7 +1,7 @@
-# Video Progress Bar
+# Progress Bar
 ---
 
-- Video Progress Bar
+- Progress Bar
 - Play Button
 - Forward and Backward Button
 

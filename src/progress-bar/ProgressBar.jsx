@@ -77,22 +77,35 @@ function ProgressBar() {
         setCurrentDate(newDate);
     };
 
-    const generateMonthLabels = () => {
+    const generateLabels = () => {
         const labels = [];
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const months = (end.getFullYear() - start.getFullYear()) * 12 + end.getMonth() - start.getMonth() + 1;
+        const progressBarWidth = progressBarRef.current ? progressBarRef.current.offsetWidth : 0;
 
-        for (let i = 0; i < months; i++) {
+        // Calculate total months between start and end dates
+        const totalMonths = (end.getFullYear() - start.getFullYear()) * 12 + end.getMonth() - start.getMonth() + 1;
+
+        // Determine the maximum number of labels that fit in the progress bar
+        const maxLabels = Math.floor(progressBarWidth / 50); // Adjust 50px per label as needed
+
+        // Determine step to reduce the number of labels if necessary
+        const step = Math.ceil(totalMonths / maxLabels);
+
+        for (let i = 0; i < totalMonths; i += step) {
             const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
             const position = ((date - start) / totalDuration) * 100;
-            labels.push({ month: date.toLocaleString('default', { month: 'short' }), position });
+            labels.push({
+                month: date.toLocaleString('default', { month: 'short' }),
+                year: date.getFullYear(),
+                position
+            });
         }
 
         return labels;
     };
 
-    const monthLabels = generateMonthLabels();
+    const monthLabels = generateLabels();
 
     return (
         <Stack direction={"column"} spacing={2}>
@@ -130,22 +143,25 @@ function ProgressBar() {
                     style={{ position: 'relative' }}
                 >
                     <LinearProgress className='progress-bar' variant="determinate" value={calculateProgress()} />
+                    
                     {/* Month Labels */}
-                <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px' }}>
-                    {monthLabels.map((label, index) => (
-                        <Typography
-                            key={index}
-                            sx={{
-                                position: 'absolute',
-                                left: `${label.position}%`,
-                                transform: 'translateX(-50%)',
-                                fontSize: '0.75rem'
-                            }}
-                        >
-                            {label.month}
-                        </Typography>
-                    ))}
-                </Box>
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px' }}>
+                        {monthLabels.map((label, index) => (
+                            <Box
+                                key={index}
+                                sx={{
+                                    position: 'absolute',
+                                    left: `${label.position}%`,
+                                    transform: 'translateX(-50%)',
+                                    textAlign: 'center',
+                                    fontSize: '0.75rem'
+                                }}
+                            >
+                                <Typography>{label.month}</Typography>
+                                <Typography variant="caption">{label.year}</Typography>
+                            </Box>
+                        ))}
+                    </Box>
                 </div>
 
                 <Stack className='control-panel' direction={"row"} spacing={2}>
@@ -154,7 +170,7 @@ function ProgressBar() {
                     <IconButton className='control' onClick={fastForward}><FastForwardRounded /></IconButton>
                 </Stack>
 
-                
+
             </Paper>
         </Stack>
     );
