@@ -5,7 +5,7 @@ import { IconButton, Paper, Stack, TextField, Typography, Box } from '@mui/mater
 import { PlayArrowRounded, PauseRounded, FastRewindRounded, FastForwardRounded } from '@mui/icons-material';
 
 function ProgressBar() {
-    const [startDate, setStartDate] = useState('2023-01-01');
+    const [startDate, setStartDate] = useState('2023-01-31');
     const [endDate, setEndDate] = useState('2023-12-31');
     const [currentDate, setCurrentDate] = useState(new Date(startDate));
     const [isPlaying, setIsPlaying] = useState(true);
@@ -18,7 +18,7 @@ function ProgressBar() {
         const timer = setInterval(() => {
             setCurrentDate((oldDate) => {
                 if (oldDate >= new Date(endDate)) {
-                    return new Date(startDate);
+                    return new Date(endDate);
                 }
                 const newDate = isPlaying ? new Date(oldDate.getTime() + 24 * 60 * 60 * 1000) : oldDate;
                 return newDate > new Date(endDate) ? new Date(endDate) : newDate;
@@ -74,7 +74,8 @@ function ProgressBar() {
         const offsetX = event.clientX - rect.left;
         const newProgress = (offsetX / rect.width) * 100;
         const newDate = new Date(new Date(startDate).getTime() + (newProgress / 100) * totalDuration);
-        setCurrentDate(newDate);
+        const clampedDate = new Date(Math.max(new Date(startDate).getTime(), Math.min(newDate.getTime(), new Date(endDate).getTime())));
+        setCurrentDate(clampedDate);
     };
 
     const generateLabels = () => {
@@ -95,6 +96,7 @@ function ProgressBar() {
         for (let i = 0; i < totalMonths; i += step) {
             const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
             const position = ((date - start) / totalDuration) * 100;
+            if(i===0) continue;
             labels.push({
                 month: date.toLocaleString('default', { month: 'short' }),
                 year: date.getFullYear(),
@@ -145,7 +147,8 @@ function ProgressBar() {
                     <LinearProgress className='progress-bar' variant="determinate" value={calculateProgress()} />
                     
                     {/* Month Labels */}
-                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px' }}>
+                                    
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px', marginLeft: '10px'}}>
                         {monthLabels.map((label, index) => (
                             <Box
                                 key={index}
@@ -154,7 +157,7 @@ function ProgressBar() {
                                     left: `${label.position}%`,
                                     transform: 'translateX(-50%)',
                                     textAlign: 'center',
-                                    fontSize: '0.75rem'
+                                    fontSize: '0.75rem',
                                 }}
                             >
                                 <Typography>{label.month}</Typography>
