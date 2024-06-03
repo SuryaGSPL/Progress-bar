@@ -3,12 +3,14 @@ import './ProgressBar.css';
 import LinearProgress from '@mui/material/LinearProgress';
 import { IconButton, Paper, Stack, TextField, Typography, Box } from '@mui/material';
 import { PlayArrowRounded, PauseRounded, FastRewindRounded, FastForwardRounded } from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
 
 function ProgressBar() {
     const [startDate, setStartDate] = useState('2023-01-31');
     const [endDate, setEndDate] = useState('2023-12-31');
     const [currentDate, setCurrentDate] = useState(new Date(startDate));
     const [isPlaying, setIsPlaying] = useState(true);
+    const [isProgressBarHover, setIsProgressBarHover] = useState(false); 
     const progressBarRef = useRef(null);
     const difference = 10 * 24 * 60 * 60 * 1000; // 10 days in milliseconds
 
@@ -108,6 +110,7 @@ function ProgressBar() {
     };
 
     const monthLabels = generateLabels();
+    const theme = useTheme();
 
     return (
         <Stack direction={"column"} spacing={2}>
@@ -142,13 +145,33 @@ function ProgressBar() {
                 <div
                     ref={progressBarRef}
                     onMouseDown={handleMouseDown}
+                    onMouseEnter={() => setIsProgressBarHover(true)}
+                    onMouseLeave={() => setIsProgressBarHover(false)}
                     style={{ position: 'relative' }}
+                    className='progress-bar-container'
                 >
-                    <LinearProgress className='progress-bar' variant="determinate" value={calculateProgress()} />
+                    <LinearProgress 
+                    className='progress-bar'
+                    variant="determinate" 
+                    value={calculateProgress()} 
+                     />
+
+                    <div style={{backgroundColor: theme.palette.primary.main, 
+                        display: isProgressBarHover ? 'inline-block' : 'none',
+                        position: 'absolute',
+                        left: `${calculateProgress()}%`,
+                        transition: '0.4s',
+                        transform: 'translateX(-50%) translateY(-73%)',
+                        cursor: 'pointer',
+                        borderRadius: '50%',
+                        width: isProgressBarHover ?'18px' : '0px',
+                        height: isProgressBarHover ?'18px' : '0px',
+                    
+                    }}/>
                     
                     {/* Month Labels */}
                                     
-                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px', marginLeft: '10px'}}>
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px'}}>
                         {monthLabels.map((label, index) => (
                             <Box
                                 key={index}
