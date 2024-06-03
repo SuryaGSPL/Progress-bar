@@ -141,7 +141,7 @@ function ProgressBar() {
             </div>
 
             {/* Progress Bar and Controls */}
-            <Paper sx={{ width: '100%', p: 2, position: 'relative' }} elevation={4}>
+            <Paper sx={{ width: '100%', p:4, position: 'relative' }} elevation={4}>
                 <div
                     ref={progressBarRef}
                     onMouseDown={handleMouseDown}
@@ -171,7 +171,7 @@ function ProgressBar() {
                     
                     {/* Month Labels */}
                                     
-                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '10px'}}>
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '20px', marginLeft: '10px'}}>
                         {monthLabels.map((label, index) => (
                             <Box
                                 key={index}
@@ -181,10 +181,11 @@ function ProgressBar() {
                                     transform: 'translateX(-50%)',
                                     textAlign: 'center',
                                     fontSize: '0.75rem',
+                                    
                                 }}
                             >
-                                <Typography>{label.month}</Typography>
-                                <Typography variant="caption">{label.year}</Typography>
+                                <Typography sx={{userSelect: 'none'}}>{label.month}</Typography>
+                                <Typography sx={{userSelect: 'none'}} variant="caption">{label.year}</Typography>
                             </Box>
                         ))}
                     </Box>
