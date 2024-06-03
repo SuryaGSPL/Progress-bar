@@ -97,15 +97,14 @@ function ProgressBar() {
 
         for (let i = 0; i < totalMonths; i += step) {
             const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
-            const position = ((date - start) / totalDuration) * 100;
-            if(i===0) continue;
+            const position = (((date - start) / totalDuration) * 100);
             labels.push({
                 month: date.toLocaleString('default', { month: 'short' }),
                 year: date.getFullYear(),
                 position
             });
         }
-
+        console.log(labels);
         return labels;
     };
 
@@ -171,8 +170,9 @@ function ProgressBar() {
                     
                     {/* Month Labels */}
                                     
-                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '20px', marginLeft: '10px'}}>
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '20px'}}>
                         {monthLabels.map((label, index) => (
+                            (label.position>=0 && label.position<=95) &&
                             <Box
                                 key={index}
                                 sx={{
