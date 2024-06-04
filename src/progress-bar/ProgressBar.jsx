@@ -116,7 +116,7 @@ function ProgressBar() {
 
             {/* Input Panel */}
             <Paper sx={{ width: 'fit-content', p: 2 }} elevation={4}>
-                <form className='input-panel'>
+                <form className='input-panel' >
                     <label>Start Date</label>
                     <TextField
                         type='date'
@@ -135,7 +135,7 @@ function ProgressBar() {
             {/* Info Panel */}
             <div>
                 <Paper className='info-panel' sx={{ color: 'primary.main', fontWeight: 'bold' }} elevation={4}>
-                    <Typography className='info'>{currentDate.toDateString()}</Typography>
+                    <Typography className='info' sx={{userSelect: 'none'}}>{currentDate.toDateString()}</Typography>
                 </Paper>
             </div>
 
@@ -170,7 +170,7 @@ function ProgressBar() {
                     
                     {/* Month Labels */}
                                     
-                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '20px'}}>
+                    <Box className='month-labels' sx={{ position: 'relative', width: '100%', marginTop: '20px', marginBottom: '40px'}}>
                         {monthLabels.map((label, index) => (
                             (label.position>=0 && label.position<=95) &&
                             <Box
